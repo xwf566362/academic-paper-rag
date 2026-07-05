@@ -1,0 +1,65 @@
+# ============================================================
+# 论文RAG知识库 - 全局配置文件
+# ============================================================
+
+default_provider: deepseek
+
+llm_providers:
+  tongyi:
+    api_key: ""
+    base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    model: "qwen-plus"
+    max_tokens: 2048
+    temperature: 0.3
+
+  zhipu:
+    api_key: "your-zhipu-api-key"
+    base_url: "https://open.bigmodel.cn/api/paas/v4"
+    model: "glm-4-plus"
+    max_tokens: 2048
+    temperature: 0.3
+
+  deepseek:
+    api_key: "your-deepseek-api-key"
+    base_url: "https://api.deepseek.com/v1"
+    model: "deepseek-chat"
+    max_tokens: 2048
+    temperature: 0.3
+
+request_timeout: 60
+max_retries: 3
+retry_delay: 2.0
+
+embedding:
+  model_name: "C:/Users/15707/.cache/modelscope/BAAI/bge-small-zh-v1.5"
+  device: "cpu"
+  normalize_embeddings: true
+
+reranker:
+  model_name: ""
+  device: "cpu"
+
+chroma:
+  persist_directory: "data/chroma"
+  collection_name: "papers"
+  distance: "cosine"
+
+retrieval:
+  top_k_initial: 20
+  top_k_rerank: 5
+  chunk_score_threshold: 0.3
+
+chunking:
+  chunk_size: 512
+  chunk_overlap: 64
+  max_section_chars: 60000
+
+server:
+  host: "0.0.0.0"
+  port: 8000
+  reload: true
+
+frontend:
+  server_name: "0.0.0.0"
+  server_port: 7860
+  share: false

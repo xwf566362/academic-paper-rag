@@ -1,0 +1,35 @@
+ # ============================================================
+ # 论文RAG知识库 - 依赖清单
+ # 安装: pip install -r requirements.txt
+ # ============================================================
+ 
+ # ---- PDF解析 ----
+ PyMuPDF>=1.24.0
+ 
+ # ---- 向量数据库 ----
+ chromadb>=0.5.0
+ 
+ # ---- 嵌入与重排模型（BGE系列，本地运行） ----
+ sentence-transformers>=2.7.0
+ torch>=2.1.0
+ 
+ # ---- 后端API ----
+ fastapi>=0.111.0
+ uvicorn[standard]>=0.29.0
+ pydantic>=2.7.0
+ pydantic-settings>=2.2.0
+ 
+ # ---- 异步HTTP客户端（调用远程LLM API） ----
+ httpx>=0.27.0
+ 
+ # ---- 前端 ----
+ gradio>=4.36.0
+ 
+ # ---- 工具库 ----
+ pyyaml>=6.0
+ python-multipart>=0.0.9   # FastAPI文件上传
+ tiktoken>=0.7.0            # Token计数
+ aiofiles>=23.2.0           # 异步文件操作
+ 
+ # ---- 日志 ----
+ loguru>=0.7.2

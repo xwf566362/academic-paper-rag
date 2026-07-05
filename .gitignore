@@ -1,0 +1,13 @@
+﻿__pycache__/
+*.pyc
+*.pyo
+paper-rag/data/chroma/
+paper-rag/data/papers/
+paper-rag/logs/
+paper-rag/fix_*.py
+paper-rag/patch_*.py
+paper-rag/write_*.py
+paper-rag/rebuild_*.py
+paper-rag/download_model.py
+.DS_Store
+Thumbs.db
