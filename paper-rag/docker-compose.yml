@@ -1,0 +1,30 @@
+﻿version: "3.8"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+      - "7860:7860"
+    volumes:
+      - ./data:/app/data
+      - huggingface_cache:/root/.cache/huggingface
+    environment:
+      - SERVER_HOST=0.0.0.0
+      - SERVER_PORT=8000
+      - FRONTEND_HOST=0.0.0.0
+      - FRONTEND_PORT=7860
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  huggingface_cache:

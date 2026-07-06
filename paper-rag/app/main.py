@@ -9,6 +9,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_config
 from app.api.routers import router as api_router
+from app.api.conversations import router as conversations_router
+from app.api.config import router as config_router
 from app.api.analysis_routes import router as analysis_router
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s | %(name)-20s | %(levelname)-5s | %(message)s")
@@ -31,6 +33,8 @@ async def lifespan(app: FastAPI):
 app = FastAPI(title="论文RAG知识库", description="基于本地嵌入+远程LLM的学术论文智能问答系统", version="1.0.0", lifespan=lifespan)
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 app.include_router(api_router)
+app.include_router(conversations_router)
+app.include_router(config_router)
 app.include_router(analysis_router)
 
 

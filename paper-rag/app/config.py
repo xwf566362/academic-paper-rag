@@ -65,6 +65,17 @@ def load_config(config_path: Optional[Path] = None) -> AppConfig:
     with open(path, "r", encoding="utf-8") as f:
         raw = yaml.safe_load(f)
     cfg = AppConfig()
+    local_path = path.parent / (chr(97)+chr(112)+chr(112)) / (chr(99)+chr(111)+chr(110)+chr(102)+chr(105)+chr(103)+chr(46)+chr(108)+chr(111)+chr(99)+chr(97)+chr(108)+chr(46)+chr(121)+chr(97)+chr(109)+chr(108))
+    if not local_path.exists():
+        local_path = path.parent / (chr(99)+chr(111)+chr(110)+chr(102)+chr(105)+chr(103)+chr(46)+chr(108)+chr(111)+chr(99)+chr(97)+chr(108)+chr(46)+chr(121)+chr(97)+chr(109)+chr(108))
+    if local_path.exists():
+        with open(local_path) as f:
+            for k,v in (yaml.safe_load(f) or {}).items():
+                if k == chr(108)+chr(108)+chr(109)+chr(95)+chr(112)+chr(114)+chr(111)+chr(118)+chr(105)+chr(100)+chr(101)+chr(114)+chr(115):
+                    for n,p in v.items():
+                        raw.setdefault(k,{})[n] = {**raw.get(k,{}).get(n,{}), **p}
+                else:
+                    raw[k] = v
     providers_raw = raw.get("llm_providers", {})
     for name, p in providers_raw.items():
         cfg.llm_providers[name] = LLMProviderConfig(

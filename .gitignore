@@ -11,3 +11,43 @@ paper-rag/rebuild_*.py
 paper-rag/download_model.py
 .DS_Store
 Thumbs.db
+
+# Data (root level)
+data/
+
+# Temp scripts created during development
+paper-rag/*.bak
+paper-rag/unit_test_fix/
+paper-rag/down_model.py
+paper-rag/fix_*.py
+paper-rag/patch_*.py
+paper-rag/write_*.py
+paper-rag/rebuild_*.py
+paper-rag/generate_*.py
+paper-rag/update_*.py
+paper-rag/rewrite_*.py
+paper-rag/check_*.py
+paper-rag/clear_*.py
+paper-rag/clean_*.py
+paper-rag/gen_*.py
+paper-rag/add_*.py
+paper-rag/restyle*.py
+paper-rag/recolor*.py
+
+# Config with API keys
+paper-rag/config.local.yaml
+paper-rag/app/config.local.yaml
+config_backup.yaml
+
+# Cache
+.pytest_cache/
+.mypy_cache/
+paper-rag/.pytest_cache/
+
+# Virtual environment
+venv/
+.env
+
+# OS files
+.DS_Store
+Thumbs.db

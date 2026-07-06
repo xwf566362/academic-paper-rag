@@ -90,6 +90,40 @@ class LLMClient:
         raise last_exception or LLMAPIError(f"[{self.provider}] 所有重试失败")
 
 
+
+    async def stream_chat(self, system_prompt, context_chunks, user_query, max_chunk_size=800, max_tokens=None):
+        """Async generator that yields response tokens as they arrive (SSE streaming)."""
+        messages = self._build_messages(system_prompt, context_chunks, user_query, max_chunk_size)
+        payload = {
+            "model": self.model,
+            "messages": messages,
+            "max_tokens": max_tokens or self.max_tokens,
+            "temperature": self.temperature,
+            "stream": True,
+        }
+        try:
+            async with httpx.AsyncClient(timeout=self.timeout) as client:
+                async with client.stream("POST", self._build_chat_url(), headers=self._get_headers(), json=payload) as response:
+                    if response.status_code != 200:
+                        yield f"[错误: HTTP {response.status_code}]"
+                        return
+                    async for line in response.aiter_lines():
+                        if not line.startswith("data: "):
+                            continue
+                        data = line[6:].strip()
+                        if data == "[DONE]":
+                            return
+                        try:
+                            import json as _json
+                            chunk = _json.loads(data)
+                            delta = chunk.get("choices", [{}])[0].get("delta", {}).get("content", "")
+                            if delta:
+                                yield delta
+                        except _json.JSONDecodeError:
+                            continue
+        except Exception as e:
+            yield f"[连接错误: {e}]"
+
 ACADEMIC_SYSTEM_PROMPT = (
     "你是一个严谨的学术研究助手。\n"
     "核心原则：\n"
